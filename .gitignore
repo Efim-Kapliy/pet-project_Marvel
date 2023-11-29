@@ -3,15 +3,10 @@
 # layout
 /layout
 
-#src
-/src
-
-# mailer
-/dist/mailer
-/src/mailer
-
 # dependencies
 /node_modules
+/.pnp
+.pnp.js
 
 # testing
 /coverage
