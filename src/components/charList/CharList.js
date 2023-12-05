@@ -38,8 +38,8 @@ class CharList extends Component {
 
       return (
         <li className="char__item" key={item.id}>
-          <img src={item.thumbnail} alt="abyss" style={noImg} />
-          <div className="char__name">Abyss</div>
+          <img src={item.thumbnail} alt={item.name} style={noImg} />
+          <div className="char__name">{item.name}</div>
         </li>
       );
     });
