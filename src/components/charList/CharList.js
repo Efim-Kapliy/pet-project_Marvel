@@ -12,16 +12,22 @@ class CharList extends Component {
     error: false,
     newItemLoading: false,
     offset: 300,
+    charEnded: false,
+    pageEnded: false,
   };
 
   marvelService = new MarvelService();
 
   componentDidMount() {
     // this.onRequest();
+    window.addEventListener("scroll", this.checkPageEnded);
+    window.addEventListener("scroll", this.onUpdateCharListByScroll);
   }
 
   componentWillUnmount() {
     this.onRequest();
+    window.removeEventListener("scroll", this.checkPageEnded);
+    window.removeEventListener("scroll", this.onUpdateCharListByScroll);
   }
 
   onRequest = (offset) => {
@@ -36,11 +42,16 @@ class CharList extends Component {
   };
 
   onCharListLoaded = (newCharList) => {
+    let ended = false;
+    if (newCharList.length < 9) ended = true;
+
     this.setState(({ charList, offset }) => ({
       charList: [...charList, ...newCharList],
       loading: false,
       newItemLoading: false,
       offset: offset + 9,
+      charEnded: ended,
+      pageEnded: false,
     }));
   };
 
@@ -49,6 +60,20 @@ class CharList extends Component {
       loading: false,
       error: true,
     });
+  };
+
+  checkPageEnded = () => {
+    if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.offsetHeight - 3) {
+      this.setState({ pageEnded: true });
+    }
+  };
+
+  onUpdateCharListByScroll = () => {
+    const { newItemLoading, charEnded, pageEnded, offset } = this.state;
+
+    if (pageEnded && !newItemLoading && !charEnded) {
+      this.onRequest(offset);
+    }
   };
 
   renderItems(arr) {
@@ -70,7 +95,7 @@ class CharList extends Component {
   }
 
   render() {
-    const { charList, loading, error, newItemLoading, offset } = this.state;
+    const { charList, loading, error, newItemLoading, offset, charEnded } = this.state;
 
     const items = this.renderItems(charList);
 
@@ -86,6 +111,7 @@ class CharList extends Component {
         <button
           className="button button__main button__long"
           disabled={newItemLoading}
+          style={{ display: charEnded ? "none" : "block" }}
           onClick={() => this.onRequest(offset)}
         >
           <div className="inner">load more</div>
