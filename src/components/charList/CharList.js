@@ -106,6 +106,12 @@ class CharList extends Component {
             this.props.onCharSelected(item.id);
             this.focusOnItem(i);
           }}
+          onKeyDown={(e) => {
+            if ((e.key = "ENTER")) {
+              this.props.onCharSelected(item.id);
+              this.focusOnItem(i);
+            }
+          }}
           tabIndex="0"
         >
           <img src={item.thumbnail} alt={item.name} style={noImg} />
