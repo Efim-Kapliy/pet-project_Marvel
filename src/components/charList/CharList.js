@@ -78,6 +78,20 @@ class CharList extends Component {
     }
   };
 
+  onAddActiveClass = (key) => {
+    this.state.charList.forEach((item, i) => {
+      if (item.id === key) {
+        document.querySelectorAll(".char__item").forEach((list, k) => {
+          list.classList.remove("char__item_selected");
+
+          if (k === i) {
+            list.classList.add("char__item_selected");
+          }
+        });
+      }
+    });
+  };
+
   renderItems(arr) {
     const items = arr.map((item) => {
       const noImg = { pointerEvents: "none" };
@@ -86,8 +100,15 @@ class CharList extends Component {
         : (noImg.objectFit = "cover");
 
       return (
-        <li className="char__item" key={item.id} onClick={() => this.props.onCharSelected(item.id)}>
-          <img src={item.thumbnail} alt={item.name} style={noImg} />
+        <li
+          className="char__item"
+          key={item.id}
+          onClick={() => {
+            this.props.onCharSelected(item.id);
+            this.onAddActiveClass(item.id);
+          }}
+        >
+          <img src={item.thumbnail} alt={item.name} style={noImg} tabIndex="0" />
           <div className="char__name">{item.name}</div>
         </li>
       );
@@ -122,6 +143,7 @@ class CharList extends Component {
     );
   }
 }
+
 CharList.propTypes = {
   onCharSelected: PropTypes.func.isRequired,
 };
