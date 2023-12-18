@@ -78,22 +78,20 @@ class CharList extends Component {
     }
   };
 
-  onAddActiveClass = (key) => {
-    this.state.charList.forEach((item, i) => {
-      if (item.id === key) {
-        document.querySelectorAll(".char__item").forEach((list, k) => {
-          list.classList.remove("char__item_selected");
+  itemRefs = [];
 
-          if (k === i) {
-            list.classList.add("char__item_selected");
-          }
-        });
-      }
-    });
+  setRef = (ref) => {
+    this.itemRefs.push(ref);
+  };
+
+  focusOnItem = (id) => {
+    this.itemRefs.forEach((item) => item.classList.remove("char__item_selected"));
+    this.itemRefs[id].classList.add("char__item_selected");
+    this.itemRefs[id].focus();
   };
 
   renderItems(arr) {
-    const items = arr.map((item) => {
+    const items = arr.map((item, i) => {
       const noImg = { pointerEvents: "none" };
       item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
         ? (noImg.objectFit = "fill")
@@ -103,12 +101,14 @@ class CharList extends Component {
         <li
           className="char__item"
           key={item.id}
+          ref={this.setRef}
           onClick={() => {
             this.props.onCharSelected(item.id);
-            this.onAddActiveClass(item.id);
+            this.focusOnItem(i);
           }}
+          tabIndex="0"
         >
-          <img src={item.thumbnail} alt={item.name} style={noImg} tabIndex="0" />
+          <img src={item.thumbnail} alt={item.name} style={noImg} />
           <div className="char__name">{item.name}</div>
         </li>
       );
