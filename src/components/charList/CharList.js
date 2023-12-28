@@ -24,18 +24,21 @@ const CharList = (props) => {
     return () => {
       window.removeEventListener("scroll", checkPageEnded);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, error]);
 
   useEffect(() => {
     return () => {
       onRequest(offset);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (pageEnded) {
       onRequest(offset);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageEnded]);
 
   const onRequest = (offset) => {
