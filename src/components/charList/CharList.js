@@ -3,20 +3,19 @@ import PropTypes from "prop-types";
 
 import Spinner from "../spinner/Spinner.js";
 import ErrorMessage from "../error/ErrorMessage.js";
-import MarvelService from "../../services/MarvelService";
+import useMarvelService from "../../services/MarvelService";
 
 import "./charList.scss";
 
 const CharList = (props) => {
   const [charList, setCharList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
   const [offset, setOffset] = useState(300);
   const [charEnded, setCharEnded] = useState(false);
   const [pageEnded, setPageEnded] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
 
-  const marvelService = new MarvelService();
+  const { loading, error, getAllCharacters } = useMarvelService();
 
   useEffect(() => {
     window.addEventListener("scroll", checkPageEnded);
@@ -29,7 +28,7 @@ const CharList = (props) => {
 
   useEffect(() => {
     return () => {
-      onRequest(offset);
+      onRequest(offset, true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,34 +40,23 @@ const CharList = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageEnded]);
 
-  const onRequest = (offset) => {
-    onCharListLoading();
+  const onRequest = (offset, initial = false) => {
+    setButtonLoadingLocked(true);
+    setShowSpinner(initial);
 
-    marvelService
-      .getAllCharacters(offset)
+    getAllCharacters(offset)
       .then(onCharListLoaded)
-      .catch(onError)
       .finally(() => {
         setButtonLoadingLocked(false);
         setPageEnded(false);
+        setShowSpinner(false);
       });
-  };
-
-  const onCharListLoading = () => {
-    setButtonLoadingLocked(true);
   };
 
   const onCharListLoaded = (newCharList) => {
     setCharList((charList) => [...charList, ...newCharList]);
-    setLoading(false);
-    setError(false);
     setOffset((offset) => offset + 9);
     setCharEnded(newCharList.length < 9 ? true : false);
-  };
-
-  const onError = () => {
-    setLoading(false);
-    setError(true);
   };
 
   const checkPageEnded = () => {
@@ -122,15 +110,14 @@ const CharList = (props) => {
 
   const items = renderItems(charList);
 
-  const spinner = loading ? <Spinner /> : null;
+  const spinner = loading && showSpinner ? <Spinner /> : null;
   const errorMessage = error ? <ErrorMessage /> : null;
-  const content = !(loading || error) ? items : null;
 
   return (
     <div className="char__list">
       {spinner}
       {errorMessage}
-      {content}
+      {items}
       <button
         className="button button__main button__long"
         disabled={buttonLoadingLocked}
