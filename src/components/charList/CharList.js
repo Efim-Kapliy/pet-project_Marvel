@@ -9,11 +9,11 @@ import "./charList.scss";
 
 const CharList = (props) => {
   const [charList, setCharList] = useState([]);
-  const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
   const [offset, setOffset] = useState(300);
   const [charEnded, setCharEnded] = useState(false);
   const [pageEnded, setPageEnded] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
 
   const { loading, error, getAllCharacters } = useMarvelService();
 
