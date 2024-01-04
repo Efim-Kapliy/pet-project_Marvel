@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./comicsList.scss";
 
 import useMarvelService from "../../services/MarvelService";
@@ -39,9 +39,24 @@ const ComicsList = () => {
     setOffset((offset) => offset + 8);
   };
 
+  const itemRefs = useRef([]);
+
+  const focusOnItem = (id) => {
+    itemRefs.current.forEach((item) => item.classList.remove("comics__item_selected"));
+    itemRefs.current[id].classList.add("comics__item_selected");
+    itemRefs.current[id].focus();
+  };
+
   function renderItems(arr) {
     const items = arr.map((item, i) => (
-      <li className="comics__item" key={item.id}>
+      <li
+        className="comics__item"
+        key={item.id}
+        ref={(el) => (itemRefs.current[i] = el)}
+        onClick={() => {
+          focusOnItem(i);
+        }}
+      >
         <a href="#" tabIndex="0">
           <img src={item.thumbnail} alt={item.name} className="comics__item-img" />
           <div className="comics__item-name">{item.name}</div>
