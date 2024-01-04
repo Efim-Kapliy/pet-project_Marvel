@@ -26,6 +26,7 @@
       width: 200px;
       height: 200px;
       object-fit: cover;
+      pointer-events: none;
       transform: translate(-15px, -15px);
     }
     &_selected {

@@ -77,7 +77,7 @@ const CharList = (props) => {
 
   function renderItems(arr) {
     const items = arr.map((item, i) => {
-      const noImg = { pointerEvents: "none" };
+      const noImg = {};
       item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
         ? (noImg.objectFit = "fill")
         : (noImg.objectFit = "cover");
