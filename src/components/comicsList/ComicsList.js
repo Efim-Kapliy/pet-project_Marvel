@@ -28,6 +28,7 @@ const ComicsList = () => {
     return () => {
       onRequest(offset, true);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -83,6 +84,11 @@ const ComicsList = () => {
           ref={(el) => (itemRefs.current[i] = el)}
           onClick={() => {
             focusOnItem(i);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              focusOnItem(i);
+            }
           }}
         >
           <a href="#" tabIndex="0">
