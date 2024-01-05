@@ -13,6 +13,7 @@ const ComicsList = () => {
   const [offset, setOffset] = useState(123);
   const [showSpinner, setShowSpinner] = useState(false);
   const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
+  const [itemIdFocus, setItemIdFocus] = useState(null);
 
   const { loading, error, getAllComics } = useMarvelService();
 
@@ -40,13 +41,12 @@ const ComicsList = () => {
   };
 
   const itemRefs = useRef([]);
-  let itemId;
 
   const focusOnItem = (id) => {
-    if (itemId !== undefined) {
-      itemRefs.current[itemId].classList.remove("comics__item_selected");
+    if (itemIdFocus !== null) {
+      itemRefs.current[itemIdFocus].classList.remove("comics__item_selected");
     }
-    itemId = id;
+    setItemIdFocus(id);
     itemRefs.current[id].classList.add("comics__item_selected");
     itemRefs.current[id].focus();
   };
