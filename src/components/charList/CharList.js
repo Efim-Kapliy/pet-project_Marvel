@@ -14,6 +14,7 @@ const CharList = (props) => {
   const [pageEnded, setPageEnded] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
+  const [itemIdFocus, setItemIdFocus] = useState(null);
 
   const { loading, error, getAllCharacters } = useMarvelService();
 
@@ -70,7 +71,11 @@ const CharList = (props) => {
   const itemRefs = useRef([]);
 
   const focusOnItem = (id) => {
-    itemRefs.current.forEach((item) => item.classList.remove("char__item_selected"));
+    if (itemIdFocus !== null) {
+      itemRefs.current[itemIdFocus].classList.remove("char__item_selected");
+    }
+
+    setItemIdFocus(id);
     itemRefs.current[id].classList.add("char__item_selected");
     itemRefs.current[id].focus();
   };
