@@ -3,8 +3,6 @@ import "./comicsList.scss";
 
 import useMarvelService from "../../services/MarvelService";
 
-import uw from "../../resources/img/UW.png";
-import xMen from "../../resources/img/x-men.png";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../error/ErrorMessage";
 
@@ -88,9 +86,9 @@ const ComicsList = () => {
           }}
         >
           <a href="#" tabIndex="0">
-            <img src={item.thumbnail} alt={item.name} className="comics__item-img" />
-            <div className="comics__item-name">{item.name}</div>
-            <div className="comics__item-price">9.99$</div>
+            <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
+            <div className="comics__item-name">{item.title}</div>
+            <div className="comics__item-price">{item.price}</div>
           </a>
         </li>
       );
