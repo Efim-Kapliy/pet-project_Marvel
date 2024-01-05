@@ -14,14 +14,30 @@ const ComicsList = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
   const [itemIdFocus, setItemIdFocus] = useState(null);
+  const [pageEnded, setPageEnded] = useState(false);
 
   const { loading, error, getAllComics } = useMarvelService();
+
+  useEffect(() => {
+    window.addEventListener("scroll", checkPageEnded);
+    return () => {
+      window.removeEventListener("scroll", checkPageEnded);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, error]);
 
   useEffect(() => {
     return () => {
       onRequest(offset, true);
     };
   }, []);
+
+  useEffect(() => {
+    if (pageEnded) {
+      onRequest(offset);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageEnded]);
 
   const onRequest = (offset, initial = false) => {
     setButtonLoadingLocked(true);
@@ -31,6 +47,7 @@ const ComicsList = () => {
       .then(onComicsListLoaded)
       .finally(() => {
         setButtonLoadingLocked(false);
+        setPageEnded(false);
         setShowSpinner(false);
       });
   };
@@ -38,6 +55,14 @@ const ComicsList = () => {
   const onComicsListLoaded = (newComicsList) => {
     setComicsList((comicsList) => [...comicsList, ...newComicsList]);
     setOffset((offset) => offset + 8);
+  };
+
+  const checkPageEnded = () => {
+    const pageEnd = window.scrollY + document.documentElement.clientHeight >= document.documentElement.offsetHeight - 6;
+    if (pageEnd && !loading && !error) {
+      setButtonLoadingLocked(true);
+      setPageEnded(true);
+    }
   };
 
   const itemRefs = useRef([]);
