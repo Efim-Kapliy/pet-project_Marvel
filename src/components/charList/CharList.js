@@ -61,7 +61,7 @@ const CharList = (props) => {
   };
 
   const checkPageEnded = () => {
-    const pageEnd = window.scrollY + document.documentElement.clientHeight >= document.documentElement.offsetHeight - 3;
+    const pageEnd = window.scrollY + document.documentElement.clientHeight >= document.documentElement.offsetHeight - 6;
     if (pageEnd && !loading && !error && !buttonLoadingLocked) {
       setButtonLoadingLocked(true);
       setPageEnded(true);
