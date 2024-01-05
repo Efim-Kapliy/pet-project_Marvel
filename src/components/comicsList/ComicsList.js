@@ -40,30 +40,36 @@ const ComicsList = () => {
   };
 
   const itemRefs = useRef([]);
+  let itemId;
 
   const focusOnItem = (id) => {
-    itemRefs.current.forEach((item) => item.classList.remove("comics__item_selected"));
+    if (itemId !== undefined) {
+      itemRefs.current[itemId].classList.remove("comics__item_selected");
+    }
+    itemId = id;
     itemRefs.current[id].classList.add("comics__item_selected");
     itemRefs.current[id].focus();
   };
 
   function renderItems(arr) {
-    const items = arr.map((item, i) => (
-      <li
-        className="comics__item"
-        key={item.id}
-        ref={(el) => (itemRefs.current[i] = el)}
-        onClick={() => {
-          focusOnItem(i);
-        }}
-      >
-        <a href="#" tabIndex="0">
-          <img src={item.thumbnail} alt={item.name} className="comics__item-img" />
-          <div className="comics__item-name">{item.name}</div>
-          <div className="comics__item-price">9.99$</div>
-        </a>
-      </li>
-    ));
+    const items = arr.map((item, i) => {
+      return (
+        <li
+          className="comics__item"
+          key={item.id}
+          ref={(el) => (itemRefs.current[i] = el)}
+          onClick={() => {
+            focusOnItem(i);
+          }}
+        >
+          <a href="#" tabIndex="0">
+            <img src={item.thumbnail} alt={item.name} className="comics__item-img" />
+            <div className="comics__item-name">{item.name}</div>
+            <div className="comics__item-price">9.99$</div>
+          </a>
+        </li>
+      );
+    });
 
     return <ul className="comics__grid">{items}</ul>;
   }
