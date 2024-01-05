@@ -23,9 +23,9 @@ const ComicsList = () => {
     };
   }, []);
 
-  const onRequest = () => {
+  const onRequest = (offset, initial = false) => {
     setButtonLoadingLocked(true);
-    setShowSpinner(true);
+    setShowSpinner(initial);
 
     getAllComics(offset)
       .then(onComicsListLoaded)
@@ -84,7 +84,13 @@ const ComicsList = () => {
       {spinner}
       {errorMessage}
       {items}
-      <button className="button button__main button__long">
+      <button
+        className="button button__main button__long"
+        disabled={buttonLoadingLocked}
+        onClick={() => {
+          onRequest(offset);
+        }}
+      >
         <div className="inner">load more</div>
       </button>
     </div>
