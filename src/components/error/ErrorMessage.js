@@ -4,7 +4,7 @@ import "./errorMessage.scss";
 const ErrorMessage = () => {
   return (
     <svg version="1.1" id="error-404-img" xmlns="http://www.w3.org/2000/svg" x="0px"
-      y="0px" viewBox="0 0 344.7 276.7" style={{ display: "block", width: "100%", height: "250px", objectFit: "contain", margin: "0 auto" }} aria-labelledby="uniqueTitleID uniqueDescID" role="img">
+      y="0px" viewBox="0 0 344.7 276.7" style={{ display: "block", width: "100%", height: "400px", objectFit: "contain", margin: "0 auto" }} aria-labelledby="uniqueTitleID uniqueDescID" role="img">
       <title id="uniqueTitleID">Error 404</title>
       <desc id="uniqueDescID">An unexpected 404 error has occurred.</desc>
       <g id="decorations">
