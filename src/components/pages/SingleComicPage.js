@@ -10,7 +10,7 @@ import "./singleComicPage.scss";
 const SingleComicPage = () => {
   const { comicId } = useParams();
   const [comic, setComic] = useState(null);
-  const { loading, error, clearError, getComics } = useMarvelService();
+  const { loading, error, clearError, getComic } = useMarvelService();
 
   useEffect(() => {
     updateComic();
@@ -24,7 +24,7 @@ const SingleComicPage = () => {
 
   const updateComic = () => {
     clearError();
-    getComics(comicId).then(onCharLoaded);
+    getComic(comicId).then(onCharLoaded);
   };
 
   const onCharLoaded = (comic) => {
