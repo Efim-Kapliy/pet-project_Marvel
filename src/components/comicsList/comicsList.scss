@@ -19,13 +19,13 @@
       pointer-events: none;
     }
     &-name {
-      margin-top: 10px;
+      margin: 9px 3px 0;
       font-weight: bold;
       font-size: 14px;
       line-height: 18px;
     }
     &-price {
-      margin-top: 5px;
+      margin: 3px 3px 0;
       font-weight: bold;
       font-size: 14px;
       line-height: 18px;
@@ -33,11 +33,13 @@
       text-transform: uppercase;
     }
     &_selected {
+      transition: 0.1s transform;
       box-shadow: 0 5px 20px $main-color;
       transform: translateY(-8px);
     }
     &:hover {
       transform: translateY(-5px);
+      color: $main-color;
     }
   }
 }

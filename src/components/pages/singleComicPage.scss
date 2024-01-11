@@ -9,6 +9,7 @@
   &__img {
     width: 293px;
     height: 450px;
+    pointer-events: none;
   }
   &__name {
     font-weight: bold;
