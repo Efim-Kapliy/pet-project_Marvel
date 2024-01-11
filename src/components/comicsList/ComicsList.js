@@ -9,7 +9,7 @@ import ErrorMessage from "../error/ErrorMessage";
 
 const ComicsList = () => {
   const [comicsList, setComicsList] = useState([]);
-  const [offset, setOffset] = useState(123);
+  const [offset, setOffset] = useState(476);
   const [showSpinner, setShowSpinner] = useState(false);
   const [buttonLoadingLocked, setButtonLoadingLocked] = useState(true);
   const [itemIdFocus, setItemIdFocus] = useState(null);
@@ -81,7 +81,7 @@ const ComicsList = () => {
       return (
         <li
           className="comics__item"
-          key={item.id}
+          key={i}
           ref={(el) => (itemRefs.current[i] = el)}
           onClick={() => {
             focusOnItem(i);
