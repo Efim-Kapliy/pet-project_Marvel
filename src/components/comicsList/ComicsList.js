@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./comicsList.scss";
 
 import useMarvelService from "../../services/MarvelService";
@@ -76,8 +76,14 @@ const ComicsList = () => {
     itemRefs.current[id].focus();
   };
 
+  let navigate = useNavigate();
+
   function renderItems(arr) {
     const items = arr.map((item, i) => {
+      const handleClickItem = () => {
+        navigate(`/comics/${item.id}`);
+      };
+
       return (
         <li
           className="comics__item"
@@ -92,11 +98,16 @@ const ComicsList = () => {
             }
           }}
         >
-          <Link to={`/comics/${item.id}`} tabIndex="0">
+          <button type="button" onClick={handleClickItem} className="comics__item-button">
             <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
             <div className="comics__item-name">{item.title}</div>
             <div className="comics__item-price">{item.price}</div>
-          </Link>
+          </button>
+          {/* <Link to={`/comics/${item.id}`} tabIndex="0">
+            <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
+            <div className="comics__item-name">{item.title}</div>
+            <div className="comics__item-price">{item.price}</div>
+          </Link> */}
         </li>
       );
     });
