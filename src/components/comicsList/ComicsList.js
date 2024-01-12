@@ -103,11 +103,6 @@ const ComicsList = () => {
             <div className="comics__item-name">{item.title}</div>
             <div className="comics__item-price">{item.price}</div>
           </button>
-          {/* <Link to={`/comics/${item.id}`} tabIndex="0">
-            <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
-            <div className="comics__item-name">{item.title}</div>
-            <div className="comics__item-price">{item.price}</div>
-          </Link> */}
         </li>
       );
     });
