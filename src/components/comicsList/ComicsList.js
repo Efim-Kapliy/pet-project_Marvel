@@ -76,7 +76,7 @@ const ComicsList = () => {
     itemRefs.current[id].focus();
   };
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   function renderItems(arr) {
     const items = arr.map((item, i) => {

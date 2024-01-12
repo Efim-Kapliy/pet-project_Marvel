@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 import useMarvelService from "../../services/MarvelService";
 import Spinner from "../spinner/Spinner";
@@ -60,6 +61,31 @@ const View = ({ char }) => {
     ? (noImg.objectFit = "fill")
     : (noImg.objectFit = "cover");
 
+  const navigate = useNavigate();
+
+  function renderItems(arr) {
+    const items = arr.slice(0, 12).map((item, i) => {
+      const handleClick = () => {
+        const link = item.resourceURI.replace(/.*\/(.*)/, "$1");
+        navigate(`/comics/${link}`);
+
+        console.log(link);
+      };
+
+      return (
+        <li key={i} className="char__comics-item">
+          <button onClick={handleClick} className="char__comics-button">
+            {item.name}
+          </button>
+        </li>
+      );
+    });
+
+    return items;
+  }
+
+  const items = renderItems(comics);
+
   return (
     <>
       <div className="char__basics">
@@ -80,13 +106,7 @@ const View = ({ char }) => {
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
         {comics.length > 0 ? null : "No comics related to this character have been found."}
-        {comics.slice(0, 12).map((item, i) => {
-          return (
-            <li key={i} className="char__comics-item">
-              {item.name}
-            </li>
-          );
-        })}
+        {items}
       </ul>
     </>
   );
