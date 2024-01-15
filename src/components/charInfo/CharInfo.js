@@ -68,8 +68,6 @@ const View = ({ char }) => {
       const handleClick = () => {
         const link = item.resourceURI.replace(/.*\/(.*)/, "$1");
         navigate(`/comics/${link}`);
-
-        console.log(link);
       };
 
       return (
