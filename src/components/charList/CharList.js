@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, createRef } from "react";
 import PropTypes from "prop-types";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import Spinner from "../spinner/Spinner.js";
 import ErrorMessage from "../error/ErrorMessage.js";
@@ -86,31 +87,40 @@ const CharList = (props) => {
       item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
         ? (noImg.objectFit = "fill")
         : (noImg.objectFit = "cover");
+      const addItemRef = (el) => (itemRefs.current[i] = el);
 
       return (
-        <li
-          className="char__item"
-          key={item.id}
-          ref={(el) => (itemRefs.current[i] = el)}
-          onClick={() => {
-            props.onCharSelected(item.id);
-            focusOnItem(i);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
+        <CSSTransition key={item.id} nodeRef={createRef(null)} timeout={500} classNames="item">
+          <li
+            className="char__item"
+            ref={(el) => {
+              addItemRef(el);
+              createRef(null);
+            }}
+            onClick={() => {
               props.onCharSelected(item.id);
               focusOnItem(i);
-            }
-          }}
-          tabIndex="0"
-        >
-          <img src={item.thumbnail} alt={item.name} style={noImg} />
-          <div className="char__name">{item.name}</div>
-        </li>
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                props.onCharSelected(item.id);
+                focusOnItem(i);
+              }
+            }}
+            tabIndex="0"
+          >
+            <img src={item.thumbnail} alt={item.name} style={noImg} />
+            <div className="char__name">{item.name}</div>
+          </li>
+        </CSSTransition>
       );
     });
 
-    return <ul className="char__grid">{items}</ul>;
+    return (
+      <ul className="char__grid">
+        <TransitionGroup component={null}>{items}</TransitionGroup>
+      </ul>
+    );
   }
 
   const items = renderItems(charList);
