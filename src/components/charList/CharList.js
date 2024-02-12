@@ -90,12 +90,11 @@ const CharList = (props) => {
       const addItemRef = (el) => (itemRefs.current[i] = el);
 
       return (
-        <CSSTransition key={item.id} nodeRef={createRef(null)} timeout={500} classNames="item">
+        <CSSTransition key={item.id} timeout={500} classNames="item">
           <li
             className="char__item"
             ref={(el) => {
               addItemRef(el);
-              createRef(null);
             }}
             onClick={() => {
               props.onCharSelected(item.id);

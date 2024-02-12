@@ -16,7 +16,6 @@ const AppHeader = () => {
               Characters
             </NavLink>
           </li>
-          /
           <li>
             <NavLink to="/comics" className={({ isActive }) => (isActive ? "link_active" : "")}>
               Comics

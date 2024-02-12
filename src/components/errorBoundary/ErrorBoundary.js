@@ -16,7 +16,7 @@ class ErrorBoundary extends Component {
     if (this.state.error) {
       return (
         <div id="main">
-          <div class="fof">
+          <div className="fof">
             <h1>Something went wrong</h1>
           </div>
         </div>
