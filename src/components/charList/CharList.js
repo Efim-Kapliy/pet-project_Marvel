@@ -87,15 +87,12 @@ const CharList = (props) => {
       item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
         ? (noImg.objectFit = "fill")
         : (noImg.objectFit = "cover");
-      const addItemRef = (el) => (itemRefs.current[i] = el);
 
       return (
-        <CSSTransition key={item.id} timeout={500} classNames="item">
+        <CSSTransition key={item.id} classNames="item" timeout={450} nodeRef={createRef(null)}>
           <li
             className="char__item"
-            ref={(el) => {
-              addItemRef(el);
-            }}
+            ref={(el) => (itemRefs.current[i] = el)}
             onClick={() => {
               props.onCharSelected(item.id);
               focusOnItem(i);
