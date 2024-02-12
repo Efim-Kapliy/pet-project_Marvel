@@ -89,7 +89,7 @@ const CharList = (props) => {
         : (noImg.objectFit = "cover");
 
       return (
-        <CSSTransition key={item.id} classNames="item" timeout={450} nodeRef={createRef(null)}>
+        <CSSTransition key={item.id} classNames="item" timeout={330}>
           <li
             className="char__item"
             ref={(el) => (itemRefs.current[i] = el)}

@@ -86,7 +86,7 @@ const ComicsList = () => {
       };
 
       return (
-        <CSSTransition key={i} timeout={450} classNames="item" nodeRef={createRef(null)}>
+        <CSSTransition key={i} classNames="item" timeout={330}>
           <li
             className="comics__item"
             ref={(el) => (itemRefs.current[i] = el)}
