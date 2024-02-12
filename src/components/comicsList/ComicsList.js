@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, createRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./comicsList.scss";
 
 import useMarvelService from "../../services/MarvelService";
@@ -85,29 +86,34 @@ const ComicsList = () => {
       };
 
       return (
-        <li
-          className="comics__item"
-          key={i}
-          ref={(el) => (itemRefs.current[i] = el)}
-          onClick={() => {
-            focusOnItem(i);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
+        <CSSTransition key={i} timeout={450} classNames="item" nodeRef={createRef(null)}>
+          <li
+            className="comics__item"
+            ref={(el) => (itemRefs.current[i] = el)}
+            onClick={() => {
               focusOnItem(i);
-            }
-          }}
-        >
-          <button type="button" onClick={handleClickItem} className="comics__item-button">
-            <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
-            <div className="comics__item-name">{item.title}</div>
-            <div className="comics__item-price">{item.price}</div>
-          </button>
-        </li>
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                focusOnItem(i);
+              }
+            }}
+          >
+            <button type="button" onClick={handleClickItem} className="comics__item-button">
+              <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
+              <div className="comics__item-name">{item.title}</div>
+              <div className="comics__item-price">{item.price}</div>
+            </button>
+          </li>
+        </CSSTransition>
       );
     });
 
-    return <ul className="comics__grid">{items}</ul>;
+    return (
+      <ul className="comics__grid">
+        <TransitionGroup component={null}>{items}</TransitionGroup>
+      </ul>
+    );
   }
 
   const items = renderItems(comicsList);
