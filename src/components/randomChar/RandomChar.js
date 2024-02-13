@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+
 import Spinner from "../spinner/Spinner.js";
 import ErrorMessage from "../error/ErrorMessage.js";
 import useMarvelService from "../../services/MarvelService.js";
+
 import "./randomChar.scss";
 
 import mjolnir from "../../resources/img/mjolnir.png";

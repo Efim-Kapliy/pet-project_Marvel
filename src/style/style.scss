@@ -1,6 +1,7 @@
-@import "./variables";
+@import "./variables.scss";
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap");
-@import "./button";
+@import "./button.scss";
+@import "./validation.scss";
 
 * {
   font-family: "Roboto Condensed", sans-serif;
