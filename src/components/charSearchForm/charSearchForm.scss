@@ -1,8 +1,11 @@
 .char {
   &__search {
-    margin-top: 30px;
     padding: 25px;
     width: 425px;
+    display: grid;
+    grid: auto-flow / repeat(1, 1fr);
+    row-gap: 15px;
+    justify-content: space-between;
     background: #fff;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
     &-name {
@@ -11,19 +14,26 @@
       line-height: 24px;
       margin-top: 10px;
     }
-    &-flex {
-      margin-top: 15px;
+    &-flex,
+    &-valid {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       row-gap: 15px;
+      flex-wrap: wrap;
     }
   }
   &__field {
+    padding: 0 10px;
     width: 250px;
     height: 38px;
     border: none;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    font-weight: 400;
+    &::placeholder {
+      font-size: 14px;
+      font-weight: 400;
+    }
   }
 }
