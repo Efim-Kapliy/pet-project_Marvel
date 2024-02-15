@@ -2,10 +2,43 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage as FormikErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import Spinner from "../spinner/Spinner";
+import ErrorMessage from "../error/ErrorMessage";
+import useMarvelService from "../../services/MarvelService";
+
 import "./charSearchForm.scss";
 
 const CharSearchForm = () => {
-  const [toPage, setToPage] = useState();
+  const { loading, error, clearError, getCharacterByName } = useMarvelService();
+  const [char, setChar] = useState(null);
+  const [showSpinner, setShowSpinner] = useState(false);
+
+  const onCharLoaded = (charName) => {
+    setChar(charName);
+    console.log(charName[0]);
+  };
+
+  const onRequest = (name) => {
+    clearError();
+    setShowSpinner(loading);
+
+    getCharacterByName(name)
+      .then(onCharLoaded)
+      .finally(() => {
+        setShowSpinner(loading);
+      });
+  };
+
+  const response = !char ? null : char.length > 0 ? (
+    <div className="char__search-valid">
+      <div className="valid valid__text">There is! Visit NAME page?</div>
+      <a href="#" className="button button__secondary">
+        <div className="inner">TO PAGE</div>
+      </a>
+    </div>
+  ) : (
+    <div className="error error__text">The character was not found. Check the name and try again</div>
+  );
 
   return (
     <div className="char__search">
@@ -21,27 +54,19 @@ const CharSearchForm = () => {
             .max(50, "Too Long!")
             .required("This field is required"),
         })}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={({ charName }) => {
+          onRequest(charName);
         }}
       >
-        {({ isSubmitting }) => (
-          <Form className="char__search-flex">
-            <Field id="charName" className="char__field" type="text" name="charName" placeholder="Enter name" />
-            <button className="button button__main" type="submit" disabled={isSubmitting}>
-              <div className="inner">FIND</div>
-            </button>
-            <FormikErrorMessage className="error error__text" name="charName" component="div" />
-          </Form>
-        )}
+        <Form className="char__search-flex">
+          <Field id="charName" className="char__field" type="text" name="charName" placeholder="Enter name" />
+          <button className="button button__main" type="submit" disabled={loading}>
+            <div className="inner">FIND</div>
+          </button>
+          <FormikErrorMessage className="error error__text" name="charName" component="div" />
+        </Form>
       </Formik>
-      <div className="char__search-valid">
-        <div className="valid valid__text">There is! Visit NAME page?</div>
-        <a href={toPage} className="button button__secondary">
-          <div className="inner">TO PAGE</div>
-        </a>
-      </div>
-      <div className="error error__text">The character was not found. Check the name and try again</div>
+      {response}
     </div>
   );
 };
