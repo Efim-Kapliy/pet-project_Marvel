@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage as FormikErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../error/ErrorMessage";
@@ -29,12 +30,19 @@ const CharSearchForm = () => {
       });
   };
 
+  const navigate = useNavigate();
+
+  const handleClickItem = () => {
+    navigate(`/character/${char[0].id}`);
+  };
+
+  const errorMessage = error ? <ErrorMessage /> : null;
   const response = !char ? null : char.length > 0 ? (
     <div className="char__search-valid">
-      <div className="valid valid__text">There is! Visit NAME page?</div>
-      <a href="#" className="button button__secondary">
+      <div className="valid valid__text">There is! Visit {char[0].name} page?</div>
+      <button href="#" className="button button__secondary" onClick={handleClickItem}>
         <div className="inner">TO PAGE</div>
-      </a>
+      </button>
     </div>
   ) : (
     <div className="error error__text">The character was not found. Check the name and try again</div>
@@ -67,6 +75,7 @@ const CharSearchForm = () => {
         </Form>
       </Formik>
       {response}
+      {errorMessage}
     </div>
   );
 };
