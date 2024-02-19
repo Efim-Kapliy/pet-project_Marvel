@@ -35,7 +35,8 @@ const CharSearchForm = () => {
     navigate(`/characters/${char[0].id}`);
   };
 
-  const errorMessage = error ? <ErrorMessage /> : null;
+  const errorMessage = error && <ErrorMessage />;
+  const spinner = loading && <Spinner spinnerSize="72px" />;
   const response = !char ? null : char.length > 0 ? (
     <div className="char__search-valid">
       <div className="valid valid__text">There is! Visit {char[0].name} page?</div>
@@ -73,6 +74,7 @@ const CharSearchForm = () => {
           <FormikErrorMessage className="error error__text" name="charName" component="div" />
         </Form>
       </Formik>
+      {spinner}
       {response}
       {errorMessage}
     </div>
