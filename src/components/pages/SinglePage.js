@@ -10,7 +10,7 @@ import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../error/ErrorMessage";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
-const пше = ({ Component, dataType }) => {
+const SinglePage = ({ Component, dataType }) => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const { loading, error, clearError, getComic, getCharacter } = useMarvelService();
