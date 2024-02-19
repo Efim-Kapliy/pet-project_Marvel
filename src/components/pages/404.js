@@ -1,7 +1,10 @@
-import ErrorMessage from "../error/ErrorMessage";
 import { Link } from "react-router-dom";
+import usePreviousPage from "../../hooks/usePreviousPage";
+import ErrorMessage from "../error/ErrorMessage";
 
 const Page404 = () => {
+  usePreviousPage();
+
   return (
     <div style={{ padding: "9% 0" }}>
       <ErrorMessage />

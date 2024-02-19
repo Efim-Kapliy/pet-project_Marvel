@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import usePreviousPage from "../../hooks/usePreviousPage";
 import useMarvelService from "../../services/MarvelService";
 
 import AppBanner from "../appBanner/AppBanner";
@@ -12,6 +13,7 @@ const SinglePage = ({ Component, dataType }) => {
   const { singlePageId } = useParams();
   const [data, setData] = useState(null);
   const { loading, error, clearError, getComic, getCharacter } = useMarvelService();
+  usePreviousPage();
 
   useEffect(() => {
     updateData();
