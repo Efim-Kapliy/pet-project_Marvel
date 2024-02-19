@@ -12,7 +12,6 @@ import "./charSearchForm.scss";
 const CharSearchForm = () => {
   const { loading, error, clearError, getCharacterByName } = useMarvelService();
   const [char, setChar] = useState(null);
-  const [showSpinner, setShowSpinner] = useState(false);
 
   const onCharLoaded = (charName) => {
     setChar(charName);
@@ -20,13 +19,8 @@ const CharSearchForm = () => {
 
   const onRequest = (name) => {
     clearError();
-    setShowSpinner(loading);
 
-    getCharacterByName(name)
-      .then(onCharLoaded)
-      .finally(() => {
-        setShowSpinner(loading);
-      });
+    getCharacterByName(name).then(onCharLoaded);
   };
 
   const navigate = useNavigate();
