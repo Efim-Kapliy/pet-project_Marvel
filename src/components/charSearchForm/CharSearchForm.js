@@ -16,7 +16,6 @@ const CharSearchForm = () => {
 
   const onCharLoaded = (charName) => {
     setChar(charName);
-    console.log(charName[0]);
   };
 
   const onRequest = (name) => {
@@ -33,7 +32,7 @@ const CharSearchForm = () => {
   const navigate = useNavigate();
 
   const handleClickItem = () => {
-    navigate(`/character/${char[0].id}`);
+    navigate(`/characters/${char[0].id}`);
   };
 
   const errorMessage = error ? <ErrorMessage /> : null;

@@ -4,14 +4,12 @@ import { useParams } from "react-router-dom";
 import useMarvelService from "../../services/MarvelService";
 
 import AppBanner from "../appBanner/AppBanner";
-import SingleCharacterLayout from "./singleCharacterLayout/SingleCharacterLayout";
-import SingleComicLayout from "./singleComicLayout/SingleComicLayout";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../error/ErrorMessage";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 const SinglePage = ({ Component, dataType }) => {
-  const { id } = useParams();
+  const { singlePageId } = useParams();
   const [data, setData] = useState(null);
   const { loading, error, clearError, getComic, getCharacter } = useMarvelService();
 
@@ -23,17 +21,17 @@ const SinglePage = ({ Component, dataType }) => {
   useEffect(() => {
     updateData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [singlePageId]);
 
   const updateData = () => {
     clearError();
 
     switch (dataType) {
       case "character":
-        getCharacter(id).then(onDataLoaded);
+        getCharacter(singlePageId).then(onDataLoaded);
         break;
       case "comic":
-        getComic(id).then(onDataLoaded);
+        getComic(singlePageId).then(onDataLoaded);
         break;
       default:
         console.error("Invalid address inside the SinglePage. You need either '../character' or '../comic'.");
