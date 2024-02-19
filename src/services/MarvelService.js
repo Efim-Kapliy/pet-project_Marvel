@@ -10,7 +10,7 @@ const useMarvelService = () => {
 
   const getAllCharacters = async (offset = _baseOffset) => {
     const res = await request(`${_apiBase}characters?limit=9&offset=${offset}&${_apiKey}`);
-    return res.data.results.map(_transformCharacter);
+    return res.data.results.map((item) => _transformCharacter(item, true));
   };
 
   const getCharacter = async (id) => {
@@ -30,16 +30,18 @@ const useMarvelService = () => {
 
   const getCharacterByName = async (charName) => {
     const res = await request(`${_apiBase}characters?name=${charName}&${_apiKey}`);
-    return res.data.results.map(_transformCharacter);
+    return res.data.results.map((item) => _transformCharacter(item, true));
   };
 
-  const _transformCharacter = (char) => {
+  const _transformCharacter = (char, limit = false) => {
     return {
       id: char.id,
       name: char.name,
-      description: char.description
+      description: !char.description
+        ? "The description of this character has not been found."
+        : limit
         ? `${char.description.slice(0, 228)}...`
-        : "The description of this character has not been found.",
+        : char.description,
       thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
       homepage: char.urls[0].url,
       wiki: char.urls[1].url,
