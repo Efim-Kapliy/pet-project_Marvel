@@ -29,9 +29,8 @@ const CharList = (props) => {
   }, [loading, error]);
 
   useEffect(() => {
-    return () => {
-      onRequest(offset, true);
-    };
+    onRequest(offset, true);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
